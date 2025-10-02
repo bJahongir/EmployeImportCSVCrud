@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeImportCSVCrud", "EmployeImportCSVCrud\EmployeImportCSVCrud.csproj", "{FD25C4C8-2847-402B-8A35-C1548E31606D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		db-init.sql = db-init.sql
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeImportApp.Tests", "EmployeeImportApp.Tests\EmployeeImportApp.Tests.csproj", "{EBF80827-2E3D-4302-BAEE-64A9A9315898}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD25C4C8-2847-402B-8A35-C1548E31606D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD25C4C8-2847-402B-8A35-C1548E31606D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD25C4C8-2847-402B-8A35-C1548E31606D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD25C4C8-2847-402B-8A35-C1548E31606D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBF80827-2E3D-4302-BAEE-64A9A9315898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBF80827-2E3D-4302-BAEE-64A9A9315898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBF80827-2E3D-4302-BAEE-64A9A9315898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBF80827-2E3D-4302-BAEE-64A9A9315898}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02786458-73D3-47CA-932F-E641DCF69374}
+	EndGlobalSection
+EndGlobal

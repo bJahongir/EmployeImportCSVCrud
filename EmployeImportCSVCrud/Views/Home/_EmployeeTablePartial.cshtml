@@ -1,0 +1,255 @@
+﻿@using EmployeImportCSVCrud
+@model PagedResult<EmployeeImportApp.Models.Employee>
+
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="PayrollNumber" asp-route-sortDirection="@(ViewBag.SortColumn == "PayrollNumber" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            Payroll #
+                            @if (ViewBag.SortColumn == "PayrollNumber")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="Forenames" asp-route-sortDirection="@(ViewBag.SortColumn == "Forenames" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            First Name
+                            @if (ViewBag.SortColumn == "Forenames")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="Surname" asp-route-sortDirection="@(ViewBag.SortColumn == "Surname" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            Last Name
+                            @if (ViewBag.SortColumn == "Surname")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="DateOfBirth" asp-route-sortDirection="@(ViewBag.SortColumn == "DateOfBirth" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            DOB
+                            @if (ViewBag.SortColumn == "DateOfBirth")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="Telephone" asp-route-sortDirection="@(ViewBag.SortColumn == "Telephone" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            Telephone
+                            @if (ViewBag.SortColumn == "Telephone")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="Mobile" asp-route-sortDirection="@(ViewBag.SortColumn == "Mobile" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            Mobile
+                            @if (ViewBag.SortColumn == "Mobile")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="EmailHome" asp-route-sortDirection="@(ViewBag.SortColumn == "EmailHome" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            Email
+                            @if (ViewBag.SortColumn == "EmailHome")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortColumn="StartDate" asp-route-sortDirection="@(ViewBag.SortColumn == "StartDate" && ViewBag.SortDirection == "asc" ? "desc" : "asc")" asp-route-search="@ViewBag.Search">
+                            Start Date
+                            @if (ViewBag.SortColumn == "StartDate")
+                            {
+                                <i class="fas @(ViewBag.SortDirection == "asc" ? "fa-sort-down" : "fa-sort-up")"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var emp in Model.Items)
+                {
+                    <tr>
+                        <td><strong>@emp.PayrollNumber</strong></td>
+                        <td>@emp.Forenames</td>
+                        <td>@emp.Surname</td>
+                        <td>@emp.DateOfBirth.ToShortDateString()</td>
+                        <td>@emp.Telephone</td>
+                        <td>@emp.Mobile</td>
+                        <td>@emp.EmailHome</td>
+                        <td>@emp.StartDate.ToShortDateString()</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit" data-bs-toggle="modal" data-bs-target="#editModal-@emp.Id" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icon btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal-@emp.Id" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editModal-@emp.Id" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form asp-action="Edit" method="post">
+                                    <input type="hidden" name="Id" value="@emp.Id" />
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"><i class="fas fa-user-edit"></i> Edit Employee</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Payroll Number</label>
+                                            <input class="form-control" name="PayrollNumber" value="@emp.PayrollNumber" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Surname</label>
+                                            <input class="form-control" name="Surname" value="@emp.Surname" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Forenames</label>
+                                            <input class="form-control" name="Forenames" value="@emp.Forenames" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email</label>
+                                            <input class="form-control" name="EmailHome" value="@emp.EmailHome" type="email" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Telephone</label>
+                                            <input class="form-control" name="Telephone" value="@emp.Telephone" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Mobile</label>
+                                            <input class="form-control" name="Mobile" value="@emp.Mobile" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Address</label>
+                                            <input class="form-control" name="Address" value="@emp.Address" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Address 2</label>
+                                            <input class="form-control" name="Address2" value="@emp.Address2" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Postcode</label>
+                                            <input class="form-control" name="Postcode" value="@emp.Postcode" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" name="DateOfBirth" value="@emp.DateOfBirth.ToString("yyyy-MM-dd")" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Start Date</label>
+                                            <input type="date" class="form-control" name="StartDate" value="@emp.StartDate.ToString("yyyy-MM-dd")" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary-custom btn-custom"><i class="fas fa-save"></i> Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deleteModal-@emp.Id" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form asp-action="Delete" method="post">
+                                    <input type="hidden" name="Id" value="@emp.Id" />
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-danger"></i> Delete Employee</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="alert alert-danger">
+                                            <i class="fas fa-exclamation-circle"></i> Are you sure you want to delete <strong>@emp.Forenames @emp.Surname</strong>?
+                                            <p class="mb-0 mt-2 small">This action cannot be undone.</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper">
+        <nav>
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.Page ? "active" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-search="@ViewBag.Search"
+                           asp-route-sortColumn="@ViewBag.SortColumn"
+                           asp-route-sortDirection="@ViewBag.SortDirection"
+                           asp-route-page="@i"
+                           asp-route-pageSize="@Model.PageSize">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+

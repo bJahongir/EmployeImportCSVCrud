@@ -1,0 +1,438 @@
+﻿@using EmployeImportCSVCrud
+@using EmployeeImportApp.Models
+@model PagedResult<Employee>
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+    :root {
+        --primary-color: #3B82F6;
+        --secondary-color: #8B5CF6;
+        --success-color: #10B981;
+        --danger-color: #EF4444;
+        --warning-color: #F59E0B;
+        --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        --sidebar-hover: rgba(255, 255, 255, 0.1);
+        --content-bg: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #14b8a6 100%);
+    }
+
+
+
+    .action-bar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 12px 18px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .search-box {
+        position: relative;
+        flex: 1;
+        max-width: 280px;
+    }
+
+        .search-box input {
+            padding-left: 32px;
+            border-radius: 6px;
+            border: 1px solid #E5E7EB;
+            font-size: 11px;
+            height: 32px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+            font-size: 11px;
+        }
+
+    body {
+        background: #0f172a;
+        color: #f8fafc;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .sidebar {
+        width: 240px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: linear-gradient(180deg, #1e293b, #0f172a);
+        padding: 20px;
+        box-shadow: 2px 0 10px rgba(0,0,0,.5);
+    }
+
+        .sidebar h4 {
+            color: #38bdf8;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+    .btn-custom {
+        border-radius: 8px;
+        padding: 6px 14px;
+    }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: .2s;
+        }
+
+            .sidebar a:hover, .sidebar a.active {
+                background: #38bdf8;
+                color: #fff;
+            }
+
+    .content {
+        margin-left: 260px;
+        padding: 30px;
+    }
+
+    .btn-edit {
+        background: #FEF3C7;
+        color: #F59E0B;
+    }
+
+        .btn-edit:hover {
+            background: #FDE68A;
+            transform: scale(1.1);
+        }
+
+    .btn-delete {
+        background: #FEE2E2;
+        color: #EF4444;
+    }
+
+        .btn-delete:hover {
+            background: #FECACA;
+            transform: scale(1.1);
+        }
+
+    .btn-icon {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 10px;
+    }
+
+    /* Table Card */
+    .table-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        margin: 0;
+        width: 100%;
+        font-size: 10px;
+    }
+
+        .custom-table thead {
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #14b8a6 100%);
+        }
+
+        .custom-table th {
+            padding: 8px 10px;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            color: white;
+            border-bottom: none;
+            white-space: nowrap;
+        }
+
+            .custom-table th a {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+                .custom-table th a:hover {
+                    color: #FEF3C7;
+                }
+
+                .custom-table th a i {
+                    font-size: 9px;
+                    opacity: 0.5;
+                }
+
+                    .custom-table th a i.fa-sort-up,
+                    .custom-table th a i.fa-sort-down {
+                        opacity: 1;
+                        color: #FEF3C7;
+                    }
+
+        .custom-table td {
+            padding: 8px 10px;
+            vertical-align: middle;
+            border-bottom: 1px solid #F3F4F6;
+            color: #374151;
+            font-size: 10px;
+        }
+
+        .custom-table tbody tr:hover {
+            background: #F0F9FF;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 4px;
+    }
+
+    .btn-icon {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 10px;
+    }
+
+    .btn-edit {
+        background: #FEF3C7;
+        color: #F59E0B;
+    }
+
+        .btn-edit:hover {
+            background: #FDE68A;
+            transform: scale(1.1);
+        }
+
+    .btn-delete {
+        background: #FEE2E2;
+        color: #EF4444;
+    }
+
+        .btn-delete:hover {
+            background: #FECACA;
+            transform: scale(1.1);
+        }
+
+    /* Pagination */
+    .pagination-wrapper {
+        padding: 10px 18px;
+        background: rgba(255, 255, 255, 0.8);
+        border-top: 1px solid #F3F4F6;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination {
+        margin: 0;
+    }
+
+    .page-link {
+        border: 1px solid #E5E7EB;
+        color: #6B7280;
+        padding: 4px 10px;
+        margin: 0 2px;
+        border-radius: 5px;
+        font-size: 10px;
+    }
+
+    .page-item.active .page-link {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .page-link:hover {
+        background: #F3F4F6;
+        border-color: #D1D5DB;
+        color: #374151;
+    }
+
+    /* Modal Customization */
+    .modal-content {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #F3F4F6;
+        padding: 14px 18px;
+    }
+
+    .modal-title {
+        font-weight: 600;
+        color: #111827;
+        font-size: 14px;
+    }
+
+    .modal-body {
+        padding: 18px;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #F3F4F6;
+        padding: 10px 18px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 3px;
+        font-size: 10px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #E5E7EB;
+        padding: 6px 10px;
+        font-size: 10px;
+        height: 30px;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+    .file-upload-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+    .divider {
+        width: 1px;
+        height: 20px;
+        background: #E5E7EB;
+        margin: 0 10px;
+    }
+
+    .alert {
+        font-size: 11px;
+        padding: 10px 14px;
+        border-radius: 8px;
+    }
+
+
+
+</style>
+
+<div class="sidebar">
+    <h4><i class="bi bi-people-fill"></i> Employee</h4>
+    <a href="#" class="active"><i class="bi bi-table"></i> Employees</a>
+    <a href="#"><i class="bi bi-bar-chart-line"></i> Reports</a>
+    <a href="#"><i class="bi bi-gear"></i> Settings</a>
+</div>
+
+<div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Employee</h2>
+    </div>
+
+    <!-- Alerts -->
+    @if (TempData["Message"] != null)
+    {
+        var type = TempData["MessageType"]?.ToString() ?? "success";
+        var alertClass = type switch
+        {
+            "success" => "alert-success",
+            "warning" => "alert-warning",
+            "error" => "alert-danger",
+            _ => "alert-info"
+        };
+
+        <div class="alert @alertClass alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Toolbar -->
+    <div class="mb-3 d-flex justify-content-between">
+        <button class="btn btn-info btn-custom" data-bs-toggle="modal" data-bs-target="#addModal">
+            <i class="bi bi-person-plus"></i> Add Employee
+        </button>
+        <!-- Search Form -->
+        <form asp-action="Index" method="get" class="d-flex align-items-center gap-2 flex-grow-1 flex-lg-grow-0">
+            <input type="text" name="search" value="@ViewBag.Search" class="form-control form-control-sm" placeholder="Search..." style="min-width: 180px;" />
+            <button type="submit" class="btn btn-info btn-sm"><i class="bi bi-search"></i></button>
+        </form>
+        <div>
+            <form asp-action="Import" method="post" enctype="multipart/form-data" class="d-inline">
+                <input type="file" name="file" class="form-control-file d-inline" />
+                <button type="submit" class="btn btn-outline-info btn-custom"><i class="bi bi-upload"></i> Import CSV</button>
+            </form>
+            <a asp-action="ExportCsv" class="btn btn-outline-success btn-custom"><i class="bi bi-filetype-csv"></i> Export CSV</a>
+            <a asp-action="ExportExcel" class="btn btn-outline-warning btn-custom"><i class="bi bi-file-earmark-excel"></i> Export Excel</a>
+        </div>
+    </div>
+
+    <!-- Table -->
+    @await Html.PartialAsync("_EmployeeTablePartial", Model)
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form asp-action="Create" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-person-plus"></i> Add Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body row g-2">
+                    <div class="col-md-6"><label>PayrollNumber</label><input class="form-control" name="PayrollNumber" required /></div>
+                    <div class="col-md-6"><label>Surname</label><input class="form-control" name="Surname" required /></div>
+                    <div class="col-md-6"><label>Forenames</label><input class="form-control" name="Forenames" required /></div>
+                    <div class="col-md-6"><label>Email</label><input class="form-control" name="EmailHome" /></div>
+                    <div class="col-md-6"><label>Telephone</label><input class="form-control" name="Telephone" /></div>
+                    <div class="col-md-6"><label>Mobile</label><input class="form-control" name="Mobile" /></div>
+                    <div class="col-md-6"><label>Address</label><input class="form-control" name="Address" /></div>
+                    <div class="col-md-6"><label>Address2</label><input class="form-control" name="Address2" /></div>
+                    <div class="col-md-6"><label>Postcode</label><input class="form-control" name="Postcode" /></div>
+                    <div class="col-md-6"><label>DOB</label><input type="date" class="form-control" name="DateOfBirth" /></div>
+                    <div class="col-md-6"><label>Start Date</label><input type="date" class="form-control" name="StartDate" /></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-info">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
